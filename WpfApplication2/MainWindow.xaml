@@ -1,0 +1,93 @@
+﻿<Window x:Class="LagrangeInterpol.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LagrangeInterpol"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="Интерполяция методом Лагранжа" Height="554" Width="799.248" MinHeight="410" MinWidth="654">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="37"/>
+            <RowDefinition Height="3"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="655*"/>
+            <ColumnDefinition Width="48*"/>
+            <ColumnDefinition Width="88*"/>
+        </Grid.ColumnDefinitions>
+        <lvc:CartesianChart x:Name="chart" Zoom="X" ScrollMode="X" DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding GlobalCollection}" MouseMove="chart_MouseMove" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="-9,3,0,25" Width="470" Grid.RowSpan="2">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis>
+                    <lvc:Axis.Separator>
+                        <lvc:Separator IsEnabled="True"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis MinValue="{Binding From}" MaxValue="{Binding To}">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
+        <TextBox x:Name="xTextBox" HorizontalAlignment="Left" KeyDown="XBox_KeyDown" Opacity="0.3" Height="23" Margin="31,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" OpacityMask="White">
+            <TextBox.Text>
+                <Binding Path="From" UpdateSourceTrigger="LostFocus">
+                    <Binding.Converter>
+                        <local:DoubleToStringConverter/>
+                    </Binding.Converter>
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="yTextBox" HorizontalAlignment="Left" KeyDown="XBox_KeyDown" Opacity="0.3" Height="23" Margin="83,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" Background="White" OpacityMask="White">
+            <TextBox.Text>
+                <Binding Path="To" UpdateSourceTrigger="LostFocus">
+                    <Binding.Converter>
+                        <local:DoubleToStringConverter/>
+                    </Binding.Converter>
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <CheckBox x:Name="basicFuncCheckBox" Content="Исходная функция" IsChecked="{Binding RawFuncCheck}"  HorizontalAlignment="Left" Margin="507,0,0,285" VerticalAlignment="Bottom" Checked="basicFuncCheckBox_Checked" Unchecked="basicFuncCheckBox_Checked" Height="15" Width="123"/>
+        <CheckBox x:Name="graphCheckBox1" Content="График 1" IsChecked="{Binding Func1Check}" HorizontalAlignment="Left" Margin="507,61,0,0" VerticalAlignment="Top" Checked="basicFuncCheckBox_Checked" Unchecked="basicFuncCheckBox_Checked" Height="15" Width="70"/>
+        <CheckBox x:Name="graphCheckBox2" Content="График 2" IsChecked="{Binding Func2Check}" HorizontalAlignment="Left" Margin="604,0,0,254" VerticalAlignment="Bottom" Checked="basicFuncCheckBox_Checked" Unchecked="basicFuncCheckBox_Checked" Grid.ColumnSpan="2" Height="15" Width="70"/>
+        <CheckBox x:Name="graphCheckBox3" Content="График 3" IsChecked="{Binding Func3Check}" HorizontalAlignment="Left" Margin="39,61,0,0" VerticalAlignment="Top" Checked="basicFuncCheckBox_Checked" Unchecked="basicFuncCheckBox_Checked" Grid.Column="1" Height="15" Width="70" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="647,26,0,0" VerticalAlignment="Top" Height="21" Width="144" SelectedIndex="0" Grid.ColumnSpan="3">
+            <ListBoxItem Content="Исходная функция"/>
+            <ListBoxItem Content="График 1"/>
+            <ListBoxItem Content="График 2"/>
+            <ListBoxItem Content="График 3"/>
+        </ComboBox>
+        <Label x:Name="label" Content="Считать значения для:" HorizontalAlignment="Left" Margin="507,0,0,187" VerticalAlignment="Bottom" Height="26" Width="133"/>
+        <Button x:Name="setGraphsButton" Content="Задать графики" HorizontalAlignment="Stretch" Margin="541,0,76,72" VerticalAlignment="Bottom" Click="setGraphsButton_Click" Grid.ColumnSpan="3" Height="58"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="514,0,0,166" TextWrapping="Wrap" Text="X:" VerticalAlignment="Bottom" Height="16" Width="10"/>
+        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="631,148,0,0" TextWrapping="NoWrap" Text="Y:" VerticalAlignment="Top" Height="16" Width="9"/>
+        <TextBox x:Name="XBox" HorizontalAlignment="Left" Height="19" Margin="529,0,0,163" TextWrapping="NoWrap" VerticalAlignment="Bottom" Width="79" GotFocus="XBox_GotFocus" KeyDown="XBox_KeyDown">
+            <TextBox.Text>
+                <Binding Path="X" Converter="{StaticResource DoubleToString}">
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="YBox" HorizontalAlignment="Left" Height="19" Margin="0,147,0,0" IsEnabled="False" TextWrapping="NoWrap" VerticalAlignment="Top" Width="79" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBox.Text>
+                <Binding Path="Y" Converter="{StaticResource DoubleToString}">
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Separator Height="18" Margin="0,323,0,0" Grid.ColumnSpan="3" VerticalAlignment="Top" Grid.RowSpan="2"/>
+    </Grid>
+</Window>

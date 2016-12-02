@@ -1,0 +1,139 @@
+﻿<Window x:Name="window" x:Class="LagrangeInterpol.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LagrangeInterpol"
+        mc:Ignorable="d"
+        Title="Задать графики" Height="320.354" Width="370.797" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="74*"/>
+            <ColumnDefinition Width="291*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox x:Name="groupBox" Grid.Row="1" Header="Выбрать функцию" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" Height="61" Width="161" Grid.Column="1">
+            <Grid>
+                <RadioButton x:Name="radioButton1" Content="f(x) = sin(x)" HorizontalAlignment="Left" Margin="0,3,0,0" VerticalAlignment="Top" IsChecked="True" Checked="radioButton2_Checked"/>
+                <RadioButton x:Name="radioButton2" Content="f(x) = e^sin(x) + 0.1x^2" HorizontalAlignment="Left" Margin="0,21,0,0" VerticalAlignment="Top" Checked="radioButton2_Checked"/>
+            </Grid>
+        </GroupBox>
+        <DataGrid x:Name="dataGrid" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Stretch" Width="176" CellEditEnding="dataGrid_CellEditEnding" CanUserResizeColumns="False" CanUserReorderColumns="False" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="X" Width="1*">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="X" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                            <Binding.Converter>
+                                <local:DoubleToStringConverter/>
+                            </Binding.Converter>
+                            <Binding.ValidationRules>
+                                <local:NumberValidation></local:NumberValidation>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Y" Width="1*">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Y" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                            <Binding.Converter>
+                                <local:DoubleToStringConverter/>
+                            </Binding.Converter>
+                            <Binding.ValidationRules>
+                                <local:NumberValidation></local:NumberValidation>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label x:Name="label" Content="X:" HorizontalAlignment="Left" Margin="4,5,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="argTextBox" HorizontalAlignment="Left" Height="23" Margin="24,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" GotFocus="argTextBox_GotFocus" Grid.ColumnSpan="2">
+            <TextBox.Text>
+                <Binding Path="XSet" ElementName="window">
+                    <Binding.Converter>
+                        <local:DoubleToStringConverter/>
+                    </Binding.Converter>
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label x:Name="label_Copy" Content="Y:" HorizontalAlignment="Left" Margin="41.667,4,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <TextBox x:Name="funcTextBox" HorizontalAlignment="Left" Height="23" Margin="60.667,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" IsEnabled="False" Width="85" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="YSet" ElementName="window">
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button x:Name="addButton" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Margin="150.667,7,0,0" Click="addButton_Click" Grid.Column="1"/>
+        <Button x:Name="deleteButton" Content="Удалить" HorizontalAlignment="Right" VerticalAlignment="Top" Width="60" Margin="0,7,7,0" Click="deleteButton_Click" Grid.Column="1"/>
+        <Button x:Name="saveButton" Content="Сохранить" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="156" Margin="0,0,5,10" Grid.Row="1" Click="saveButton_Click" Grid.Column="1"/>
+        <GroupBox x:Name="groupBox_Copy" Grid.Row="1" Header="Выбрать график" HorizontalAlignment="Right" Margin="0,66,5,0" VerticalAlignment="Top" Height="80" Width="161" Grid.Column="1">
+            <Grid>
+                <RadioButton x:Name="graphButton1" Content="График 1" HorizontalAlignment="Left" Margin="0,3,0,0" VerticalAlignment="Top" Checked="graphButton1_Checked" IsChecked="True"/>
+                <RadioButton x:Name="graphButton2" Content="График 2" HorizontalAlignment="Left" Margin="0,21,0,0" VerticalAlignment="Top" Checked="graphButton1_Checked"/>
+                <RadioButton x:Name="graphButton3" Content="График 3" HorizontalAlignment="Left" Margin="0,39,0,0" VerticalAlignment="Top" Checked="graphButton1_Checked"/>
+            </Grid>
+        </GroupBox>
+        <Separator HorizontalAlignment="Left" Height="100" Margin="0,-16,0,0" VerticalAlignment="Top" Width="365" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+        <GroupBox x:Name="groupBox_Copy1" Grid.Row="1" Header="Генерация точек" HorizontalAlignment="Right" Margin="0,146,5,0" VerticalAlignment="Top" Height="69" Width="161" Grid.Column="1">
+            <Grid>
+                <Label x:Name="label1" Content="От" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.163,0.012" Height="28" Width="25" FontSize="10"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="18" TextWrapping="NoWrap"  VerticalAlignment="Top" Width="27" Margin="19,3,0,0" FontSize="10" GotFocus="textBox_GotFocus">
+                    <TextBox.Text>
+                        <Binding Path="begInterval" ElementName="window" UpdateSourceTrigger="LostFocus">
+                            <Binding.Converter>
+                                <local:DoubleToStringConverter/>
+                            </Binding.Converter>
+                            <Binding.ValidationRules>
+                                <local:NumberValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Label x:Name="label1_Copy" Content="До" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.163,0.012" Height="28" Width="25" FontSize="10" Margin="46,-1,0,0"/>
+                <TextBox x:Name="textBox_Copy"  HorizontalAlignment="Left" Height="18" TextWrapping="NoWrap" VerticalAlignment="Top" Width="27" Margin="65,3,0,0" FontSize="10" RenderTransformOrigin="1.248,0.505" GotFocus="textBox_GotFocus">
+                    <TextBox.Text>
+                        <Binding Path="endInterval" ElementName="window" UpdateSourceTrigger="LostFocus">
+                            <Binding.Converter>
+                                <local:DoubleToStringConverter/>
+                            </Binding.Converter>
+                            <Binding.ValidationRules>
+                                <local:NumberValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Height="18" TextWrapping="NoWrap" Text="N" VerticalAlignment="Top" Width="24" Margin="96,3,0,0" FontSize="10" RenderTransformOrigin="1.248,0.505" GotFocus="textBox_Copy1_GotFocus"/>
+                <Label x:Name="label1_Copy1" Content="точ" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.163,0.012" Height="28" Width="25" FontSize="10" Margin="120,-1,0,0"/>
+                <Button x:Name="generatePointsButton" Content="Сгенирировать" HorizontalAlignment="Left" Margin="0,28,0,0" VerticalAlignment="Top" Width="149" Height="17" FontSize="10" Click="button_Click">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=textBox_Copy1}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=textBox_Copy}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=textBox}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</Window>
