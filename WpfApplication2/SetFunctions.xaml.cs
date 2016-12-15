@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace LagrangeInterpol
 {
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
     public partial class Window1 : Window
     {
         public ObservableCollection<ObservablePoint>[] points = new ObservableCollection<ObservablePoint>[3];
@@ -76,8 +73,6 @@ namespace LagrangeInterpol
             if (dataGrid.SelectedIndex == -1)
                 return;
             points[currIndex].RemoveAt(dataGrid.SelectedIndex);
-            //dataGrid.ItemsSource = null;
-            //dataGrid.ItemsSource = points[currIndex];
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)

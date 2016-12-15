@@ -96,16 +96,15 @@ namespace LagrangeInterpol
 
         public MainWindow()
         {
+           
             InitializeComponent();
-            
+         
             Random rand = new Random();
             DataContext = this;
             chart.ChartLegend = null;
-
             //Setting functions
             sinFunc = (x) => { return Math.Sin(x); };
             eFunc = (x) => { return Math.Pow(Math.E, Math.Sin(x)) + 0.1 * x * x; };
-
             //Setting up chart
             for (int i = 0; i < 3; ++i)
             {
@@ -114,7 +113,7 @@ namespace LagrangeInterpol
                 {
                     Values = pointValues[i],
                     LineSmoothness = 0,
-                    Fill = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)),
+                    Fill = new SolidColorBrush(Color.FromArgb(2, 41, 12, 125)),
                     Stroke = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0)),
                     PointForeround = new SolidColorBrush(Color.FromRgb((byte)rand.Next(0,255), (byte)rand.Next(0, 255), (byte)rand.Next(0, 255)))
                 };
